@@ -1,0 +1,18 @@
+library(WGCNA)
+
+######HC
+setwd("D:/Network analysis/Network Analysis AD/GSE63060 + GSE63061/1 Sorting data to be used")
+load("MCIdatExpr.Rdata")
+
+expr <- MCIdatExpr
+
+setwd("D:/Network analysis/Network Analysis AD/GSE63060 + GSE63061/3 K-means correction of data/MCI")
+load("adjusted_module_info.Rdata")
+colors <- moduleColors
+
+temp <- moduleEigengenes(expr,colors,nPC = 10,excludeGrey = FALSE,softPower = 4)
+
+MCIvarExplain <- temp$varExplained
+colnames(MCIvarExplain) <- substr(colnames(temp$averageExpr), 3, 100)
+
+save(MCIvarExplain, file = "MCIvarExplain.Rdata")
